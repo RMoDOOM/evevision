@@ -423,7 +423,7 @@ jobs:
 
       - name: Replace version placeholder in built artifacts
         if: needs.semantic-release-dry-run.outputs.new_release_published == 'true'
-        uses: datamonsters/replace-action
+        uses: datamonsters/replace-action@v2
         with:
           files: 'app/main/dist/main.prod.js,app/renderer/dist/renderer.prod.js,app/renderer/dist/sentry.prod.js'
           replacements: 1337.0.0=${{ needs.semantic-release-dry-run.outputs.new_release_version }}
