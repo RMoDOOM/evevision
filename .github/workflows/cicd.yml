@@ -420,13 +420,13 @@ jobs:
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
+
       - name: Replace version placeholder in built artifacts
         if: needs.semantic-release-dry-run.outputs.new_release_published == 'true'
-        uses: jacobtomlinson/gha-find-replace@master
+        uses: datamonsters/replace-action
         with:
-          find: "1337.0.0"
-          replace: ${{ needs.semantic-release-dry-run.outputs.new_release_version }}
-          include: "*.prod.js"
+          files: 'app/main/dist/main.prod.js,app/renderer/dist/renderer.prod.js,app/renderer/dist/sentry.prod.js'
+          replacements: 1337.0.0=${{ needs.semantic-release-dry-run.outputs.new_release_version }}
 
       - name: Replace version in package.json
         if: needs.semantic-release-dry-run.outputs.new_release_published == 'true'
@@ -434,6 +434,7 @@ jobs:
         with:
           files: |
             package.json
+            app/package.json
           patch-syntax: |
             = /version => "${{ needs.semantic-release-dry-run.outputs.new_release_version }}"
 
