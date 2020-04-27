@@ -128,11 +128,15 @@ export default class MainApp {
     });
 
     welcomeWindow.loadURL(
-      `file://${path.resolve(__dirname, "..", "renderer", "app.html")}`
+      process.env.NODE_ENV === "production"
+        ? `file://${path.join(__dirname, "..", "..", "renderer", "app.html")}`
+        : `file://${path.join(__dirname, "..", "renderer", "app.html")}`
     );
 
     fsoWindow.loadURL(
-      `file://${path.resolve(__dirname, "..", "renderer", "app.html")}`
+      process.env.NODE_ENV === "production"
+        ? `file://${path.join(__dirname, "..", "..", "renderer", "app.html")}`
+        : `file://${path.join(__dirname, "..", "renderer", "app.html")}`
     );
 
     log.info("Finished initializing CICD test");
